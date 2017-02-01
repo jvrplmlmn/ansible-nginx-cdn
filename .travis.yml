@@ -1,5 +1,13 @@
 sudo: required
 dist: trusty
 
+# Use 'chef-stable-trusty' to install the stable release of the ChefDK
+addons:
+  apt:
+    sources:
+      - chef-stable-trusty
+    packages:
+      - chefdk
+
 # Don't `bundle install`
 install: echo "skip bundle install"
