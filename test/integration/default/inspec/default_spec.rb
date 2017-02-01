@@ -13,32 +13,49 @@ describe service('nginx') do
   it { should be_running }
 end
 
-describe user('www-data') do
+nginx_user = 'www-data'
+
+describe user(nginx_user) do
   it { should exist }
 end
 
-describe host('localhost', port: 80, proto: 'tcp') do
-  it { should be_reachable }
-end
+[
+  80,
+  443
+].each do |nginx_port|
+  describe host('localhost', port: nginx_port, proto: 'tcp') do
+    it { should be_reachable }
+  end
 
-describe port(80) do
-  it { should be_listening}
+  describe port(nginx_port) do
+    it { should be_listening}
+  end
 end
 
 describe file('/etc/nginx/nginx.conf') do
   it { should exist }
 end
 
-describe file('/etc/nginx/conf.d/upstream.conf') do
-  it { should exist }
+[
+  'ssl',
+  'upstream'
+].each do |nginx_conf_file|
+  describe file("/etc/nginx/conf.d/#{nginx_conf_file}.conf") do
+    it { should exist }
+  end
 end
 
 describe file('/etc/nginx/sites-enabled/default') do
   it { should_not exist }
 end
 
-describe file('/etc/nginx/sites-enabled/cabify-http.conf') do
-  it { should exist }
-  it { should be_symlink }
-  it { should be_linked_to '/etc/nginx/sites-available/cabify-http.conf' }
+[
+  'cabify-http',
+  'cabify-https'
+].each do |site|
+  describe file("/etc/nginx/sites-enabled/#{site}.conf") do
+    it { should exist }
+    it { should be_symlink }
+    it { should be_linked_to "/etc/nginx/sites-available/#{site}.conf" }
+  end
 end
