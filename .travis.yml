@@ -24,6 +24,7 @@ before_script:
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
   - /opt/chefdk/bin/chef gem install kitchen-docker
   - /opt/chefdk/bin/chef gem install kitchen-ansible
+  - /opt/chefdk/bin/chef gem install kitchen-sync
   - ansible-galaxy install -r requirements.yml
 
 

@@ -9,6 +9,9 @@ driver:
 verifier:
   name: inspec
 
+transport:
+  name: sftp
+
 provisioner:
   name: ansible_playbook
   hosts: test-kitchen
