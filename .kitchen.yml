@@ -1,0 +1,34 @@
+---
+driver:
+  name: docker
+  privileged: true # Required for Docker w/ SystemD/Upstart
+  use_sudo: false # Required for KitchenCI + Docker to work on OSX
+  http_proxy: <%= ENV['http_proxy'] || nil %>
+  https_proxy: <%= ENV['https_proxy'] || nil %>
+
+verifier:
+  name: inspec
+
+provisioner:
+  name: ansible_playbook
+  hosts: test-kitchen
+  roles_path: roles
+  require_ansible_repo: true
+  require_ansible_omnibus: false
+  require_chef_for_busser: false
+  require_ruby_for_busser: false
+
+platforms:
+  - name: ubuntu-16.04
+    driver:
+      image: ubuntu:16.04
+      platform: ubuntu
+      run_command: /bin/systemd
+      provision_command:
+        - /usr/bin/apt-get update
+        # 'net-tools' is required for InSpec to verify ports
+        # 'iputils-ping' is required for InSpec to verify hosts
+        - /usr/bin/apt-get install -y apt-transport-https lsb-release procps net-tools iputils-ping -y
+
+suites:
+  - name: default
