@@ -10,3 +10,6 @@ addons:
       - chef-stable-trusty
     packages:
       - chefdk
+
+script:
+  - /opt/chefdk/bin/kitchen --version
