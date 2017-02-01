@@ -7,6 +7,9 @@ GEM
       test-kitchen (~> 1.4)
     kitchen-docker (2.6.0)
       test-kitchen (>= 1.0.0)
+    kitchen-sync (2.1.2)
+      net-sftp
+      test-kitchen (>= 1.0.0)
     mixlib-install (2.1.9)
       artifactory
       mixlib-shellout
@@ -15,6 +18,8 @@ GEM
     mixlib-shellout (2.2.7)
     mixlib-versioning (1.1.0)
     net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-sftp (2.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (3.2.0)
     net-ssh-gateway (1.2.0)
@@ -36,6 +41,7 @@ PLATFORMS
 DEPENDENCIES
   kitchen-ansible
   kitchen-docker
+  kitchen-sync
   test-kitchen
 
 BUNDLED WITH
