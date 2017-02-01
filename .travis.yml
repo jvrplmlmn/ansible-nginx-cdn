@@ -16,6 +16,7 @@ before_script:
   - sudo iptables -L DOCKER || sudo iptables -N DOCKER
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
   - /opt/chefdk/bin/chef gem install kitchen-docker
+  - /opt/chefdk/bin/chef gem install kitchen-ansible
 
 script:
   - /opt/chefdk/bin/kitchen --version
