@@ -11,5 +11,11 @@ addons:
     packages:
       - chefdk
 
+before_script:
+  # https://github.com/zuazo/kitchen-in-travis-native/issues/1#issuecomment-142455888
+  - sudo iptables -L DOCKER || sudo iptables -N DOCKER
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - /opt/chefdk/bin/chef gem install kitchen-docker
+
 script:
   - /opt/chefdk/bin/kitchen --version
