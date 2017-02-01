@@ -1,6 +1,8 @@
 sudo: required
 dist: trusty
 
+language: python
+
 # Use 'chef-stable-trusty' to install the stable release of the ChefDK
 addons:
   apt:
@@ -8,6 +10,3 @@ addons:
       - chef-stable-trusty
     packages:
       - chefdk
-
-# Don't `bundle install`
-install: echo "skip bundle install"
