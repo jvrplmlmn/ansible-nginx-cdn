@@ -1,3 +1,16 @@
 ---
 dependencies:
   - role: jdauphant.nginx
+    nginx_configs:
+      upstream:
+        - upstream cabify {
+            server us-pro-host01.ext.cabify.com:443;
+            server us-pro-host02.ext.cabify.com:443;
+            server us-pro-host03.ext.cabify.com:443;
+          }
+    nginx_sites:
+      cabify-http:
+        - listen 80 default_server
+        - location / {
+             proxy_pass https://cabify;
+          }
