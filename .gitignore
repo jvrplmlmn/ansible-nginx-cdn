@@ -8,3 +8,5 @@
 # Ansible
 *.retry
 
+# Roles (dependencies)
+jdauphant.nginx
