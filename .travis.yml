@@ -1,0 +1,21 @@
+sudo: required
+dist: trusty
+
+language: python
+
+# Use 'chef-stable-trusty' to install the stable release of the ChefDK
+addons:
+  apt:
+    sources:
+      - chef-stable-trusty
+    packages:
+      - chefdk
+
+before_script:
+  # https://github.com/zuazo/kitchen-in-travis-native/issues/1#issuecomment-142455888
+  - sudo iptables -L DOCKER || sudo iptables -N DOCKER
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - /opt/chefdk/bin/chef gem install kitchen-docker
+
+script:
+  - /opt/chefdk/bin/kitchen --version
