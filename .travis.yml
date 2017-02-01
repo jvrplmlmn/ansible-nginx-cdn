@@ -19,3 +19,4 @@ before_script:
 
 script:
   - /opt/chefdk/bin/kitchen --version
+  - /opt/chefdk/bin/kitchen test
