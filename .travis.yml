@@ -1,2 +1,5 @@
 sudo: required
 dist: trusty
+
+# Don't `bundle install`
+install: echo "skip bundle install"
