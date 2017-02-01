@@ -9,4 +9,5 @@
 *.retry
 
 # Roles (dependencies)
-jdauphant.nginx
+roles/jdauphant.nginx
+roles/jdauphant.ssl-certs

@@ -1,5 +1,7 @@
 ---
 dependencies:
+  - role: jdauphant.ssl-certs
+    ssl_certs_generate_dh_param: true
   - role: jdauphant.nginx
     nginx_configs:
       upstream:
@@ -8,9 +10,16 @@ dependencies:
             server us-pro-host02.ext.cabify.com:443;
             server us-pro-host03.ext.cabify.com:443;
           }
+      ssl:
+        - ssl_certificate_key {{ssl_certs_privkey_path}}
+        - ssl_certificate     {{ssl_certs_cert_path}}
+        - ssl_dhparam         {{ssl_certs_dhparam_path}}
     nginx_sites:
       cabify-http:
         - listen 80 default_server
+        - return 301 https://$host$request_uri
+      cabify-https:
+        - listen 443 ssl
         - location / {
              proxy_pass https://cabify;
           }
