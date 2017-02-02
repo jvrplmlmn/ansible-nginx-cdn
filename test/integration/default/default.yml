@@ -2,3 +2,4 @@
 - hosts: test-kitchen
   roles:
   - nginx-cdn
+  - nginx-stats-app

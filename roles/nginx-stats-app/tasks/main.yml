@@ -1,0 +1,25 @@
+---
+# tasks file for nginx-cdn
+
+- name: Create {{nginx_app_bin_dir}}
+  file:
+    path: "{{nginx_app_bin_dir}}"
+    state: directory
+
+- name: Install '{{nginx_app_name}}' from the Github release
+  get_url:
+    url: https://github.com/{{nginx_app_github_org}}/{{nginx_app_name}}/releases/download/{{nginx_app_version}}/{{nginx_app_name}}_linux_amd64
+    dest: "{{nginx_app_bin_dir}}/{{nginx_app_name}}"
+    checksum: sha256:{{nginx_app_checksum}}
+    mode: 0755
+
+- name: Deploy the systemd sevice file for the '{{nginx_app_name}}' application
+  template:
+    src: systemd/{{nginx_app_name}}.service
+    dest: /lib/systemd/system/{{nginx_app_name}}.service
+
+- name: Enable and start the '{{nginx_app_name}}' service
+  service:
+    name: "{{nginx_app_name}}"
+    state: started
+    enabled: yes
