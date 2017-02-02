@@ -6,20 +6,33 @@ dependencies:
     nginx_configs:
       upstream:
         - upstream cabify {
-            server us-pro-host01.ext.cabify.com:443;
-            server us-pro-host02.ext.cabify.com:443;
-            server us-pro-host03.ext.cabify.com:443;
+            {{ nginx_cdn_upstream_list | join(" ")}}
           }
       ssl:
         - ssl_certificate_key {{ssl_certs_privkey_path}}
         - ssl_certificate     {{ssl_certs_cert_path}}
         - ssl_dhparam         {{ssl_certs_dhparam_path}}
+      cache:
+        - proxy_cache_path {{ nginx_cdn_proxy_cache_path_options | join(" ") }}
     nginx_sites:
       cabify-http:
-        - listen 80 default_server
+        - listen {{nginx_cdn_http_port}} default_server
         - return 301 https://$host$request_uri
       cabify-https:
-        - listen 443 ssl
+        - listen {{nginx_cdn_https_port}} ssl
+        - proxy_cache cache
+        - proxy_cache_revalidate on
+        - proxy_set_header X-Real-IP $remote_addr
+        - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
+        - add_header X-Cache-Status $upstream_cache_status
+        - location ~* \.({{ nginx_cdn_cache_file_formats | join("|") }})$ {
+             proxy_next_upstream {{ nginx_cdn_proxy_next_upstream | join(" ") }};
+             proxy_set_header Host $host;
+             proxy_cache_valid 200 60m;
+             proxy_pass https://cabify;
+          }
         - location / {
+             proxy_next_upstream {{ nginx_cdn_proxy_next_upstream | join(" ") }};
+             proxy_set_header Host $host;
              proxy_pass https://cabify;
           }
