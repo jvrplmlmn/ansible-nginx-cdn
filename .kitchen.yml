@@ -26,6 +26,14 @@ platforms:
     driver:
       image: ubuntu:16.04
       platform: ubuntu
+      # For simplicity sake, we forward the ports 1:1
+      # If we had a multi-instance suite to test, we would either had to run them sequentially,
+      # to avoid port collision, or to dynamically assign ports.
+      # Since this is a simple demo, everything is hardcoded (even with privileged ports).
+      forward:
+      - 80:80
+      - 443:443
+      - 8080:8080
       run_command: /bin/systemd
       provision_command:
         - /usr/bin/apt-get update
