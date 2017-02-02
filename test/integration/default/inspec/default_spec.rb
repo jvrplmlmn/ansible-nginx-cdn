@@ -37,6 +37,7 @@ describe file('/etc/nginx/nginx.conf') do
 end
 
 [
+  'cache',
   'ssl',
   'upstream'
 ].each do |nginx_conf_file|

@@ -1,0 +1,46 @@
+---
+nginx_cdn_http_port: 80
+nginx_cdn_https_port: 443
+nginx_cdn_upstream_list:
+  - server us-pro-host01.ext.cabify.com:443;
+  - server us-pro-host02.ext.cabify.com:443;
+  - server us-pro-host03.ext.cabify.com:443;
+nginx_cdn_cache_file_formats:
+  - ico
+  - js
+  - css
+  - png
+  - gif
+  - jpe?g
+  - swf
+  - txt
+  - html?
+  - htc
+nginx_cdn_proxy_next_upstream:
+  - error
+  - timeout
+  - invalid_header
+  - http_500
+  - updating
+
+# Need to have this in a single line to avoid the parser removing
+# the double quotes from the format.
+# TODO: Find a better list solution :)
+nginx_cdn_log_format: $remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $upstream_addr $upstream_cache_status
+nginx_cdn_http_default_params:
+  - log_format main '{{ nginx_cdn_log_format }}'
+  - sendfile "on"
+  - tcp_nopush "on"
+  - tcp_nodelay "on"
+  - keepalive_timeout "65"
+  - "access_log {{nginx_log_dir}}/access.log main"
+  - "error_log {{nginx_log_dir}}/error.log {{nginx_error_log_level}}"
+  - server_tokens off
+  - types_hash_max_size 2048
+nginx_cdn_cache_path: /tmp/nginx-cache
+nginx_cdn_proxy_cache_path_options:
+  - "{{nginx_cdn_cache_path}}"
+  - levels=1:2
+  - keys_zone=cache:10m
+  - inactive=30s
+  - use_temp_path=off
