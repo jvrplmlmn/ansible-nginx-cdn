@@ -26,7 +26,7 @@ nginx_cdn_proxy_next_upstream:
 # Need to have this in a single line to avoid the parser removing
 # the double quotes from the format.
 # TODO: Find a better list solution :)
-nginx_cdn_log_format: $remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $upstream_addr
+nginx_cdn_log_format: $remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $upstream_addr $upstream_cache_status
 nginx_cdn_http_default_params:
   - log_format main '{{ nginx_cdn_log_format }}'
   - sendfile "on"
