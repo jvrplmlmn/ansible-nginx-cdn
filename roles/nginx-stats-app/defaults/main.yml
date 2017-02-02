@@ -1,0 +1,7 @@
+---
+# defaults file for nginx-stats-app
+nginx_app_name: 'nginx-requests-stats'
+nginx_app_version: 'v0.2.0'
+nginx_app_checksum: 1e2d148c3c3c53f4f744c8db491464bbdb9b0d42ad81fcf396dab8b42bfc2bc9
+nginx_app_github_org: jvrplmlmn
+nginx_app_bin_dir: "/opt/nginx-utils"

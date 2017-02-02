@@ -21,7 +21,8 @@ end
 
 [
   80,
-  443
+  443,
+  8080,
 ].each do |nginx_port|
   describe host('localhost', port: nginx_port, proto: 'tcp') do
     it { should be_reachable }
@@ -59,4 +60,10 @@ end
     it { should be_symlink }
     it { should be_linked_to "/etc/nginx/sites-available/#{site}.conf" }
   end
+end
+
+describe service('nginx-requests-stats') do
+  it { should be_enabled }
+  it { should be_installed }
+  it { should be_running }
 end

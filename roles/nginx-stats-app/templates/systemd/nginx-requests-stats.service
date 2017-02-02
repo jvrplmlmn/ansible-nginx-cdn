@@ -1,0 +1,12 @@
+[Unit]
+Description=A Golang application that returns the number of Nginx requests in the last 24h
+ConditionPathExists={{nginx_app_bin_dir}}/{{nginx_app_name}}
+After=nginx.target
+
+[Service]
+ExecStart={{nginx_app_bin_dir}}/{{nginx_app_name}}
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target
