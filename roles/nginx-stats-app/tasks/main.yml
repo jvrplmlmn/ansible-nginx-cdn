@@ -13,13 +13,14 @@
     checksum: sha256:{{nginx_app_checksum}}
     mode: 0755
 
-- name: Deploy the systemd sevice file for the '{{nginx_app_name}}' application
+- name: Deploy the systemd sevice file for the '{{nginx_app_name}}' ({{nginx_app_version}}) application
   template:
-    src: systemd/{{nginx_app_name}}.service
+    src: systemd/{{nginx_app_name}}.service.j2
     dest: /lib/systemd/system/{{nginx_app_name}}.service
 
 - name: Enable and start the '{{nginx_app_name}}' service
-  service:
+  systemd:
     name: "{{nginx_app_name}}"
     state: started
     enabled: yes
+    daemon_reload: yes

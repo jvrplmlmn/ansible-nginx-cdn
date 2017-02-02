@@ -5,6 +5,8 @@ After=nginx.target
 
 [Service]
 ExecStart={{nginx_app_bin_dir}}/{{nginx_app_name}}
+Environment=NGINX_STATS_HTTPADDR={{ nginx_app_config.http_addr }}
+Environment=NGINX_STATS_HTTPPORT={{ nginx_app_config.http_port }}
 Restart=always
 RestartSec=1
 
