@@ -1,7 +1,13 @@
 ---
 # defaults file for nginx-stats-app
 nginx_app_name: 'nginx-requests-stats'
-nginx_app_version: 'v0.2.0'
-nginx_app_checksum: 1e2d148c3c3c53f4f744c8db491464bbdb9b0d42ad81fcf396dab8b42bfc2bc9
+nginx_app_version: 'v0.3.0'
+nginx_app_checksum: 1370755a3698662d7a713c5d5f48c952943d7afd80acc270d9df382f0bd628e7
 nginx_app_github_org: jvrplmlmn
 nginx_app_bin_dir: "/opt/nginx-utils"
+
+nginx_app_config:
+  # In Python, "" is False, so this would leave the value empty,
+  # which is what we want in our SystemD file.
+  http_addr: ""
+  http_port: 8080
