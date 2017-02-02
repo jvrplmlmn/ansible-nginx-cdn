@@ -1,0 +1,3 @@
+---
+# Need to define this as a var to have precedence over the default value
+nginx_http_params: "{{ nginx_cdn_http_default_params }}"
